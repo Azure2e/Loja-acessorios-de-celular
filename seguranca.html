@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Segurança da instalação</title>
+<style>
+body{font-family:system-ui;background:#141414;color:#fff;padding:20px}
+.ok{background:#052e16;padding:16px;border-radius:16px}
+.bad{background:#3f1d1d;padding:16px;border-radius:16px}
+</style></head>
+<body>
+<h1>Verificação da fonte</h1>
+<div id="box">Checando...</div>
+<p><a href="index.html" style="color:#FF5A1F">Voltar</a></p>
+<script>
+var OFICIAIS=["https://loja-acessorios-de-celular.onrender.com","http://127.0.0.1:8080","http://localhost:8080"];
+var o=location.origin;
+var ok=OFICIAIS.indexOf(o)!==-1;
+document.getElementById("box").className=ok?"ok":"bad";
+document.getElementById("box").innerHTML=ok
+  ?"<b>Fonte verificada.</b><br>"+o
+  :"<b>Fonte nao reconhecida.</b><br>Instale so pelo site oficial.<br>"+o;
+</script>
+</body></html>
