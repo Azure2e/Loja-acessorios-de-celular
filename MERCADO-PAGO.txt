@@ -1,0 +1,56 @@
+Mercado Pago — como ligar o pagamento
+====================================
+
+1. Crie uma aplicação em:
+   https://www.mercadopago.com.br/developers/panel/app
+
+2. Copie o Access Token
+   Teste: Suas integrações > Credenciais de teste (começa com APP_USR- ou TEST-)
+   Produção: credenciais de produção (recebe dinheiro de verdade)
+
+3. Cole o token em mp-config.json:
+
+   {
+     "access_token": "APP_USR-seu-token"
+   }
+
+   Ou no PowerShell:
+
+   $env:MP_ACCESS_TOKEN="APP_USR-seu-token"
+   py server.py
+
+4. Abra http://127.0.0.1:8080
+   (a API não funciona em file:// nem sem o server.py)
+
+5. No checkout, escolha Pix.
+   A loja cria o pagamento na API do Mercado Pago,
+   mostra o QR oficial e consulta o status sozinha.
+
+Cartão: o servidor cria uma Preference (Checkout Pro)
+e abre a página do Mercado Pago.
+
+Nunca coloque o Access Token no index.html ou no App.jsx.
+É chave privada. Só o server.py pode usar.
+
+
+Cartão de crédito
+-----------------
+No mp-config.json coloque as duas chaves:
+
+{
+  "access_token": "APP_USR-...",
+  "public_key": "APP_USR-..."
+}
+
+A public_key aparece no painel do Mercado Pago junto das credenciais.
+Ela pode ir ao navegador. O access_token não.
+
+No checkout escolha Cartão. O formulário usa o SDK oficial (iframe).
+A loja envia só o token para POST /api/mp/card -> /v1/payments.
+
+Cartões de teste (conta de teste):
+https://www.mercadopago.com.br/developers/pt/docs/checkout-api/testing
+
+Exemplo Mastercard teste: 5031 4332 1540 6351
+Validade futura, CVV 123
+Nome do titular: APRO  (aprova)  ou OTHE (recusa)

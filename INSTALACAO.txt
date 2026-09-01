@@ -1,0 +1,83 @@
+INSTALAÇÃO — Loja Acessórios de celular
+======================================
+
+Requisitos
+----------
+- Windows 10/11
+- Python 3.10 ou mais novo (você já tem Python 3.13)
+- Navegador Chrome
+- (Opcional) conta Mercado Pago
+
+1. Extrair
+----------
+Extraia o zip. Entre NA PASTA DE DENTRO, a que tem server.py:
+
+  cd "$env:USERPROFILE\OneDrive\Desktop\nexo-loja (7)\nexo-loja"
+
+Confira:
+
+  dir server.py
+  dir data
+
+2. Banco de dados
+-----------------
+O sistema usa SQLite (já vem no Python).
+Na primeira execução o servidor cria:
+
+  data\nexo.db
+
+Tabelas: products, orders, settings, logs
+Se existir data\store.json, os produtos são importados para o banco.
+
+Não precisa instalar MySQL nem PostgreSQL.
+
+3. Senha e JWT
+--------------
+Arquivo admin-config.json:
+
+  password     = senha do painel
+  jwt_secret   = chave do token JWT
+  whatsapp     = número com DDI (5511...)
+
+Troque a senha padrão NexoAdmin2026.
+
+4. Ligar a loja
+---------------
+  py server.py
+
+Deve aparecer:
+  Banco SQLite: ...\data\nexo.db
+  NEXO no PC:   http://127.0.0.1:8080
+
+Não feche essa janela.
+
+5. Abrir
+--------
+Loja:   http://127.0.0.1:8080/index.html
+Admin:  http://127.0.0.1:8080/admin.html
+WhatsApp: http://127.0.0.1:8080/whatsapp.html
+
+Senha admin: a que está em admin-config.json
+
+6. Celular com HTTPS
+--------------------
+Aba 1: py server.py
+Aba 2: npx --yes cloudflared tunnel --url http://127.0.0.1:8080
+
+Use o link https://....trycloudflare.com no celular.
+
+7. Mercado Pago (opcional)
+--------------------------
+Edite mp-config.json com access_token e public_key.
+Veja MERCADO-PAGO.txt
+
+8. Firewall (opcional)
+----------------------
+PowerShell como administrador:
+
+  New-NetFirewallRule -DisplayName "NEXO 8080 LAN" -Direction Inbound -Action Allow -Protocol TCP -LocalPort 8080 -RemoteAddress 192.168.2.0/24 -Profile Private
+
+Pronto
+------
+Produtos, pedidos e logs ficam em data\nexo.db
+Faça cópia desse arquivo para backup.

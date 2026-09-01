@@ -1,0 +1,17 @@
+Ícones maskable
+===============
+O Android recorta o ícone em círculo, squircle ou gota.
+Por isso o desenho (celular + AC) fica só nos 80% do centro.
+A borda de 20% é área segura — o sistema pode cortar.
+
+Arquivos:
+  icon-*.png            purpose: any (ícone completo com moldura)
+  icon-maskable-*.png   purpose: maskable (conteúdo no centro)
+
+Splash iOS (tela de abertura do PWA):
+  splash-1290x2796.jpg  iPhone 15 Pro Max
+  splash-1179x2556.jpg  iPhone 15 Pro
+  splash-1170x2532.jpg  iPhone 13/14
+  splash-1284x2778.jpg  iPhone 14 Plus
+  splash-828x1792.jpg   iPhone XR/11
+  splash-750x1334.jpg   iPhone 8

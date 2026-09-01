@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QR para o celular</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background: #141414; color: #fff; margin: 0; padding: 2rem; text-align: center; }
+    input { font: inherit; padding: .6rem .8rem; border-radius: 10px; border: 0; width: min(22rem, 90%); }
+    button { font: inherit; margin-top: 1rem; padding: .6rem 1.2rem; border: 0; border-radius: 999px; background: #FF5A1F; color: #fff; font-weight: 700; cursor: pointer; }
+    img { background: #fff; border-radius: 16px; padding: 12px; margin-top: 1.25rem; }
+    .sub { opacity: .75; }
+    a { color: #22D3EE; }
+  </style>
+</head>
+<body>
+  <h1>Entrar no celular</h1>
+  <p class="sub">No PC rode <code>ipconfig</code> e cole o IPv4 da Wi‑Fi.</p>
+  <p>
+    <input id="ip" placeholder="192.168.0.15" />
+  </p>
+  <button type="button" id="go">Gerar QR</button>
+  <div id="out"></div>
+  <p class="sub">Celular e PC na mesma Wi‑Fi. Servidor ligado em <a href="/">http://127.0.0.1:8080</a></p>
+  <script>
+    function render(url) {
+      var src = "https://api.qrserver.com/v1/create-qr-code/?size=280x280&margin=8&data=" + encodeURIComponent(url);
+      document.getElementById("out").innerHTML =
+        '<img alt="QR" width="280" height="280" src="' + src + '"><p><b>' + url + "</b></p>";
+    }
+    document.getElementById("go").onclick = function () {
+      var ip = document.getElementById("ip").value.trim();
+      if (!ip) { alert("Cole o IPv4 do ipconfig"); return; }
+      render("http://" + ip + ":8080");
+    };
+    document.getElementById("ip").addEventListener("keydown", function (e) {
+      if (e.key === "Enter") document.getElementById("go").click();
+    });
+  </script>
+</body>
+</html>

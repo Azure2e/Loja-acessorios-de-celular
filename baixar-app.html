@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Baixar app</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#141414" />
+  <style>
+    body { margin: 0; font-family: system-ui, sans-serif; background: #141414; color: #fff; }
+    .wrap { max-width: 28rem; margin: 0 auto; padding: 1.5rem; }
+    .card { background: #1f1f24; border-radius: 20px; padding: 1.25rem; margin: 1rem 0; }
+    h1 { font-size: 1.6rem; margin: 0 0 .5rem; }
+    p { color: #cfc8bf; line-height: 1.45; }
+    .btn { display: block; width: 100%; box-sizing: border-box; text-align: center; background: #FF5A1F; color: #fff; border: 0; border-radius: 999px; padding: .9rem 1rem; font-weight: 800; font-size: 1rem; margin: .5rem 0; text-decoration: none; }
+    .btn2 { background: #fff; color: #141414; }
+    ol { padding-left: 1.2rem; color: #ddd; line-height: 1.55; }
+    a.back { color: #22D3EE; }
+    .fab { position: fixed; right: 1rem; bottom: 1rem; background: #FF5A1F; color: #fff; padding: .8rem 1rem; border-radius: 999px; font-weight: 800; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <p>Acessórios de celular</p>
+    <h1>Baixar o app</h1>
+    <p>Instala o ícone na tela do celular e abre a loja em tela cheia.</p>
+    <button class="btn" id="instalar" type="button">Baixar / instalar agora</button>
+    <a class="btn btn2" href="index.html">Abrir a loja</a>
+    <div class="card">
+      <b>Android</b>
+      <ol>
+        <li>Abra esta página no Chrome.</li>
+        <li>Toque em Baixar / instalar agora.</li>
+        <li>Se não aparecer janela: menu ⋮ → Instalar app.</li>
+      </ol>
+    </div>
+    <div class="card">
+      <b>iPhone</b>
+      <ol>
+        <li>Abra no Safari.</li>
+        <li>Toque em Compartilhar.</li>
+        <li>Toque em Adicionar à Tela de Início.</li>
+      </ol>
+    </div>
+    <p><a class="back" href="index.html">Voltar para a loja</a></p>
+  </div>
+  <script>
+    var evt = null;
+    window.addEventListener("beforeinstallprompt", function (e) {
+      e.preventDefault();
+      evt = e;
+    });
+    document.getElementById("instalar").onclick = function () {
+      if (evt) { evt.prompt(); return; }
+      if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        alert("No iPhone: Compartilhar → Adicionar à Tela de Início");
+      } else {
+        alert("No Chrome: menu ⋮ → Instalar app");
+      }
+    };
+    if ("serviceWorker" in navigator && location.protocol !== "file:") {
+      navigator.serviceWorker.register("./sw.js");
+    }
+  </script>
+</body>
+</html>

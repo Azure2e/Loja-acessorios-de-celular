@@ -1,0 +1,24 @@
+Painel admin em Django
+======================
+
+1. Na pasta da loja:
+
+   py -m pip install Django Pillow
+   py manage.py migrate
+   py manage.py createsuperuser
+   py manage.py runserver 0.0.0.0:8000
+
+2. Abra:
+
+   Loja:    http://127.0.0.1:8000/index.html
+   Admin:   http://127.0.0.1:8000/admin/
+   Suporte: http://127.0.0.1:8000/suporte/
+
+3. No admin Django você:
+   - troca nome da loja (Configuração da loja)
+   - troca preço na lista de produtos (clica e edita)
+   - marca "Em promoção" e preenche preço promocional / selo
+   - envia foto em cada produto
+   - responde tickets de suporte
+
+Usuário e senha do admin são os do createsuperuser.

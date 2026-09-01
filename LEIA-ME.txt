@@ -1,0 +1,30 @@
+PACOTE COMPLETO — Acessórios de celular
+=======================================
+
+Leia INSTALACAO.txt para instalar.
+
+Conteúdo
+--------
+Loja (index.html + app.react.min.js)
+Painel admin JWT (admin.html)
+Banco SQLite (data/nexo.db criado ao ligar)
+Formulário WhatsApp (whatsapp.html)
+PWA / baixar app (baixar-app.html + manifest + sw.js)
+QR do celular (qr.html)
+Pix + cartão Mercado Pago (server.py + mp-config.json)
+Logs do servidor no admin
+Tema claro/escuro, catálogo, carrinho, checkout
+
+Arquivos de ajuda
+-----------------
+INSTALACAO.txt
+MERCADO-PAGO.txt
+APP-MOBILE.txt
+admin-config.json   senha + jwt_secret + whatsapp
+
+Ligar
+-----
+cd pasta-que-tem-server.py
+py server.py
+http://127.0.0.1:8080/index.html
+http://127.0.0.1:8080/admin.html

@@ -1,0 +1,24 @@
+Modelos de dados Django (painel)
+================================
+
+LojaConfig
+  nome, whatsapp, pix_key, suporte_email, suporte_horario, stripe_modo
+  Controla nome da loja e canais de atendimento.
+
+Produto
+  codigo, nome, categoria, preco, preco_antigo
+  promocao_ativa, preco_promocional, selo_promo
+  estoque, compat, descricao, foto, ativo
+  Foto validada: jpg/png/webp, até 3 MB, 200×200 até 4000×4000.
+
+TicketSuporte
+  nome, email, whatsapp, assunto, mensagem, status, criado_em
+  Formulário /suporte/ grava aqui.
+
+PedidoStripe
+  codigo, email, total, stripe_session_id, stripe_payment_intent
+  status (pendente/pago/falhou/reembolsado), itens JSON, criado_em
+
+Relação
+  Produto 1—N itens no PedidoStripe (JSON)
+  LojaConfig é única (configuração)

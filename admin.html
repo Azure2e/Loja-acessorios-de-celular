@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin — Acessórios de celular</title>
+<style>
+body{margin:0;font-family:system-ui;background:#111;color:#fff}
+.wrap{max-width:980px;margin:0 auto;padding:1rem}
+input,select,textarea,button{font:inherit}
+input,select,textarea{width:100%;box-sizing:border-box;padding:.55rem .7rem;border-radius:10px;border:1px solid #333;background:#1b1b20;color:#fff;margin:.25rem 0}
+.btn{background:#FF5A1F;color:#fff;border:0;border-radius:999px;padding:.6rem 1rem;font-weight:700;cursor:pointer}
+.btn2{background:#333;color:#fff}
+.card{background:#1b1b20;border-radius:16px;padding:1rem;margin:1rem 0}
+.row{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+td,th{border-bottom:1px solid #333;padding:.4rem;text-align:left}
+a{color:#22D3EE}
+.hide{display:none}
+h1,h2{margin:.2rem 0 .6rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p><a href="index.html">← Loja</a></p>
+  <h1>Painel admin</h1>
+  <div id="login" class="card">
+    <p>Senha do servidor (arquivo admin-config.json)</p>
+    <input id="senha" type="password" placeholder="Senha">
+    <button class="btn" type="button" onclick="login()">Entrar</button>
+    <p id="erro" style="color:#f87171"></p>
+  </div>
+  <div id="app" class="hide">
+    <div class="row">
+      <button class="btn2 btn" type="button" onclick="logout()">Sair</button>
+    </div>
+    <div class="card">
+      <h2>Loja</h2>
+      <input id="sname" placeholder="Nome da loja">
+      <input id="spix" placeholder="Chave Pix">
+      <input id="swa" placeholder="WhatsApp com DDI (ex: 5511999999999)">
+      <button class="btn" type="button" onclick="saveSettings()">Salvar configurações</button>
+    </div>
+    <div class="card">
+      <h2>Novo produto</h2>
+      <input id="pname" placeholder="Nome">
+      <input id="pprice" type="number" step="0.01" placeholder="Preço">
+      <input id="pstock" type="number" placeholder="Estoque">
+      <input id="pimg" placeholder="Imagem (ex: images/capa-silicone.jpg)">
+      <select id="pcat">
+        <option value="capas">Capinhas</option>
+        <option value="peliculas">Películas</option>
+        <option value="audio">Áudio</option>
+        <option value="energia">Energia</option>
+        <option value="suportes">Suportes</option>
+      </select>
+      <button class="btn" type="button" onclick="addProduct()">Adicionar</button>
+    </div>
+    <div class="card">
+      <h2>Produtos e estoque</h2>
+      <div id="prods"></div>
+    </div>
+    <div class="card">
+      <h2>Logs do servidor</h2>
+      <button class="btn btn2" type="button" onclick="loadLogs()">Atualizar logs</button>
+      <pre id="logs" style="max-height:240px;overflow:auto;white-space:pre-wrap;font-size:12px"></pre>
+    </div>
+    <div class="card">
+      <h2>Pedidos</h2>
+      <div id="ords"></div>
+    </div>
+  </div>
+</div>
+<script>
+function token(){ return localStorage.getItem("nexo_jwt") || ""; }
+async function api(path, body){
+  const headers = {"Content-Type":"application/json"};
+  if(token()) headers.Authorization = "Bearer " + token();
+  const opt = { headers };
+  if(body){ opt.method="POST"; opt.body = JSON.stringify(body); }
+  const r = await fetch(path, opt);
+  const d = await r.json().catch(()=>({}));
+  if(!r.ok) throw new Error(d.error || "erro");
+  return d;
+}
+async function login(){
+  try{
+    const d = await api("/api/admin/login", {password: document.getElementById("senha").value}); if(d.token) localStorage.setItem("nexo_jwt", d.token);
+    document.getElementById("login").classList.add("hide");
+    document.getElementById("app").classList.remove("hide");
+    await load(); await loadLogs();
+  }catch(e){ document.getElementById("erro").textContent = "Senha incorreta ou servidor antigo."; }
+}
+async function logout(){ localStorage.removeItem("nexo_jwt"); await api("/api/admin/logout", {}); location.reload(); }
+async function load(){
+  const s = await api("/api/admin/store");
+  document.getElementById("sname").value = (s.settings&&s.settings.name)||"";
+  document.getElementById("spix").value = (s.settings&&s.settings.pix_key)||"";
+  document.getElementById("swa").value = (s.settings&&s.settings.whatsapp)||"";
+  document.getElementById("prods").innerHTML = "<table>"+(s.products||[]).map(p =>
+    `<tr>
+      <td><b>${p.name}</b><br>${p.id}</td>
+      <td>R$ ${Number(p.price).toFixed(2)}</td>
+      <td><input style="width:5rem" data-stock="${p.id}" type="number" value="${p.stock||0}"></td>
+      <td>
+        <button class="btn" type="button" onclick="saveStock('${p.id}')">Salvar</button>
+        <button class="btn btn2" type="button" onclick="delP('${p.id}')">Apagar</button>
+      </td>
+    </tr>`
+  ).join("")+"</table>";
+  document.getElementById("ords").innerHTML = (s.orders&&s.orders.length)
+    ? s.orders.map(o => `<p><b>${o.id}</b> · ${o.status||""} · ${(o.customer&&o.customer.nome)||""}<br>${o.date||""}
+      <select onchange="st('${o.id}', this.value)">
+        <option ${o.status==='Novo'?'selected':''}>Novo</option>
+        <option ${o.status==='Pago'?'selected':''}>Pago</option>
+        <option ${o.status==='Enviado'?'selected':''}>Enviado</option>
+        <option ${o.status==='Cancelado'?'selected':''}>Cancelado</option>
+      </select></p>`).join("")
+    : "Nenhum pedido no servidor.";
+}
+async function saveSettings(){
+  await api("/api/admin/settings", {name:sname.value, pix_key:spix.value, whatsapp:swa.value});
+  alert("Configurações salvas");
+}
+async function addProduct(){
+  await api("/api/admin/product", {
+    name:pname.value, price:Number(pprice.value||0), stock:Number(pstock.value||0),
+    image:pimg.value||"images/capa-silicone.jpg", category:pcat.value
+  });
+  pname.value=""; pprice.value=""; pstock.value="";
+  load();
+}
+async function saveStock(id){
+  const n = document.querySelector('[data-stock="'+id+'"]').value;
+  await api("/api/admin/product", {id, stock:Number(n)});
+  load();
+}
+async function delP(id){
+  if(!confirm("Apagar produto?")) return;
+  await api("/api/admin/product-delete", {id});
+  load();
+}
+async function st(id, status){ await api("/api/admin/order-status", {id, status}); }
+async function loadLogs(){
+  const d = await api("/api/admin/logs");
+  document.getElementById("logs").textContent = (d.logs||[]).map(x => x.time + "  " + x.line).join("\n");
+}
+api("/api/admin/me").then(d => { if(d.ok){ login.innerHTML=""; document.getElementById("login").classList.add("hide"); document.getElementById("app").classList.remove("hide"); load(); } }).catch(()=>{});
+</script>
+</body>
+</html>

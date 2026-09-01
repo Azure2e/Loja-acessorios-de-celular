@@ -1,0 +1,22 @@
+Publicar no Render
+==================
+
+1. Suba o código no GitHub (repo Azure2e/Loja-acessorios-de-celular).
+2. Acesse https://dashboard.render.com
+3. New + → Web Service
+4. Conecte o repositório
+5. Preencha:
+   Runtime: Python
+   Build Command: pip install -r requirements.txt
+   Start Command: python server.py
+6. Create Web Service
+
+Render define a variável PORT sozinho. O server.py já lê PORT.
+
+URL pública: https://loja-acessorios.onrender.com (o nome pode variar)
+
+Admin: https://SEU-SERVICO.onrender.com/admin.html
+
+No plano gratuito o serviço dorme sem acesso.
+O arquivo SQLite (data/nexo.db) some se o servidor reiniciar,
+salvo se você adicionar um Persistent Disk no Render.

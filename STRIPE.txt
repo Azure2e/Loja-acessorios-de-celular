@@ -1,0 +1,19 @@
+Stripe
+======
+
+1. Crie a conta em https://dashboard.stripe.com
+2. Copie as chaves de teste (sk_test_ e pk_test_)
+3. No PowerShell, antes do runserver:
+
+   $env:STRIPE_SECRET_KEY="sk_test_..."
+   $env:STRIPE_PUBLISHABLE_KEY="pk_test_..."
+   py manage.py runserver 0.0.0.0:8000
+
+4. Checkout: POST /api/stripe/checkout
+   Body JSON: { "email": "cli@email.com", "items": [ {"id":"p1","qty":1} ] }
+   Resposta: { "url": "https://checkout.stripe.com/..." }
+
+5. Webhook (produção): /api/stripe/webhook
+   Evento checkout.session.completed marca o pedido como pago.
+
+Nunca coloque sk_live no GitHub.

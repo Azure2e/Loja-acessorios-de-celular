@@ -1,0 +1,50 @@
+Como transformar a loja em aplicativo de celular
+================================================
+
+Caminho 1 — PWA (mais rápido)
+-----------------------------
+A loja já é um PWA. No celular ela pode aparecer como app, sem Play Store.
+
+1. Suba a pasta em um site com HTTPS
+   (Netlify, Vercel, GitHub Pages ou o server.py em um host).
+2. No Android (Chrome): menu > Instalar app / Adicionar à tela inicial.
+3. No iPhone (Safari): Compartilhar > Adicionar à Tela de Início.
+
+Assim abre em tela cheia, com ícone próprio.
+
+PWA NÃO funciona bem em arquivo local (file://). Precisa de http/https.
+
+
+Caminho 2 — APK Android (app instalável)
+----------------------------------------
+No Windows, com Node.js instalado:
+
+  cd Desktop\nexo-loja
+  npm create @capacitor/app@latest
+  npm i @capacitor/core @capacitor/cli @capacitor/android
+  npx cap init "Acessorios de celular" br.com.nexo.acessorios
+  npx cap add android
+  npx cap copy
+  npx cap open android
+
+No Android Studio: Build > Build Bundle(s) / APK(s) > Build APK.
+O arquivo .apk instala no celular (precisa permitir fontes desconhecidas).
+
+Para iPhone: precisa de Mac + Xcode + conta Apple Developer.
+
+
+O que NÃO é necessário
+----------------------
+Não precisa reescrever em Java/Kotlin/Swift. A loja já é web responsiva.
+Capacitor só empacota essa pasta dentro de um app nativo.
+
+
+Instalar o PWA (atualizado)
+---------------------------
+1. Rode py server.py
+2. No celular, abra http://IP-DO-PC:8080  (mesma Wi-Fi)
+   ou publique em HTTPS (Netlify/Vercel).
+3. Android Chrome: aparece o banner Instalar, ou menu > Instalar app.
+4. iPhone Safari: Compartilhar > Adicionar à Tela de Início.
+
+Não instala em arquivo local (file://). Precisa http ou https.

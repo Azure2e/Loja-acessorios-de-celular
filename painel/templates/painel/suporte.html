@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Suporte — {{ cfg.nome }}</title>
+<style>
+body{margin:0;font-family:system-ui;background:#F6F3EE;color:#141414;padding:1.25rem}
+.box{max-width:28rem;margin:0 auto;background:#fff;border-radius:20px;padding:1.25rem}
+input,textarea,button{font:inherit;width:100%;box-sizing:border-box;margin:.35rem 0;padding:.7rem;border-radius:12px;border:1px solid #ddd}
+button{background:#FF5A1F;color:#fff;border:0;font-weight:800}
+.ok{background:#d1fae5;padding:.75rem;border-radius:12px}
+a{color:#0b5}
+</style>
+</head>
+<body>
+<div class="box">
+  <p><a href="/">← Loja</a></p>
+  <h1>Suporte</h1>
+  <p>{{ cfg.suporte_horario }}</p>
+  {% if ok %}<p class="ok">Mensagem enviada. Veja no admin Django.</p>{% endif %}
+  <form method="post">
+    {% csrf_token %}
+    <input name="nome" required placeholder="Seu nome">
+    <input name="email" type="email" required placeholder="E-mail">
+    <input name="whatsapp" placeholder="WhatsApp">
+    <input name="assunto" required placeholder="Assunto">
+    <textarea name="mensagem" rows="4" required placeholder="Como podemos ajudar?"></textarea>
+    <button type="submit">Enviar ao suporte</button>
+  </form>
+  <p><a href="https://wa.me/{{ cfg.whatsapp }}">Falar no WhatsApp</a></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Falar no WhatsApp</title>
+<style>
+body{margin:0;font-family:system-ui;background:#F6F3EE;color:#141414;padding:1.25rem}
+.box{max-width:28rem;margin:0 auto;background:#fff;border-radius:20px;padding:1.25rem}
+input,textarea,button{font:inherit;width:100%;box-sizing:border-box;margin:.35rem 0;padding:.7rem;border-radius:12px;border:1px solid #ddd}
+button{background:#25D366;color:#fff;border:0;font-weight:800}
+a{color:#0b5}
+</style>
+</head>
+<body>
+<div class="box">
+  <p><a href="index.html">← Loja</a></p>
+  <h1>Pedido via WhatsApp</h1>
+  <input id="nome" placeholder="Seu nome">
+  <input id="fone" placeholder="Seu WhatsApp">
+  <textarea id="msg" rows="4" placeholder="Quero capinha para iPhone 16..."></textarea>
+  <button type="button" onclick="enviar()">Enviar no WhatsApp</button>
+</div>
+<script>
+async function enviar(){
+  let num = "5511999999999";
+  try{
+    const d = await fetch("/api/catalog").then(r=>r.json());
+    if(d.settings && d.settings.whatsapp) num = String(d.settings.whatsapp).replace(/\D/g,"");
+  }catch(e){}
+  const nome = document.getElementById("nome").value.trim() || "Cliente";
+  const fone = document.getElementById("fone").value.trim();
+  const msg = document.getElementById("msg").value.trim() || "Quero um orçamento.";
+  const text = "Pedido da loja Acessórios de celular%0ANome: " + encodeURIComponent(nome) + "%0AContato: " + encodeURIComponent(fone) + "%0A%0A" + encodeURIComponent(msg);
+  location.href = "https://wa.me/" + num + "?text=" + text;
+}
+</script>
+</body>
+</html>
