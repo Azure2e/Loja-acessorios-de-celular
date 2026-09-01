@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Integridade</title>
+</head>
+<body style="font-family:system-ui;background:#141414;color:#fff;padding:20px">
+<h1>Certificacao de integridade</h1>
+<pre id="out">Calculando...</pre>
+<p><a href="index.html" style="color:#FF5A1F">Loja</a></p>
+<script>
+async function sha384(buf){
+  const hash = await crypto.subtle.digest("SHA-384", buf);
+  const bytes = new Uint8Array(hash);
+  let bin = "";
+  for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+  return "sha384-" + btoa(bin);
+}
+(async function(){
+  const files = ["vendor/react.production.min.js","vendor/react-dom.production.min.js","vendor/framer-motion.js","app.react.min.js"];
+  let t = "";
+  for (const f of files){
+    try{
+      const res = await fetch(f, {cache:"no-store"});
+      const got = await sha384(await res.arrayBuffer());
+      t += f + "\n" + got + "\n\n";
+    }catch(e){ t += f + " ERRO " + e.message + "\n"; }
+  }
+  document.getElementById("out").textContent = t;
+})();
+</script>
+</body>
+</html>
