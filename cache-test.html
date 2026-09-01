@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teste cache</title>
+</head>
+<body style="font-family:system-ui;background:#111;color:#fff;padding:20px">
+<h1>Teste de imagens</h1>
+<p id="sw">SW...</p>
+<button type="button" id="go">Carregar imagens</button>
+<button type="button" id="chk">Ver cache</button>
+<div id="pics"></div>
+<pre id="out"></pre>
+<script>
+const IMGS=["images/capa-silicone.webp","images/fones.webp","images/pelicula.webp","images/powerbank.webp"];
+document.getElementById("go").onclick=function(){
+  document.getElementById("pics").innerHTML=IMGS.map(s=>'<img src="'+s+'" width="80" height="80" style="background:#222;margin:4px">').join("");
+};
+document.getElementById("chk").onclick=async function(){
+  const names=await caches.keys();
+  let t="Caches: "+names.join(", ")+"\n";
+  for(const n of names){
+    const c=await caches.open(n);
+    for(const s of IMGS){ t+=(await c.match(s)?"OK ":"NO ")+s+"\n"; }
+  }
+  document.getElementById("out").textContent=t;
+};
+if("serviceWorker" in navigator){
+  navigator.serviceWorker.register("./sw.js").then(r=>{
+    document.getElementById("sw").textContent="SW: "+(r.active?r.active.scriptURL:"instalando");
+  });
+}
+</script>
+</body>
+</html>
