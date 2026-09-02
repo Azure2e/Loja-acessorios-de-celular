@@ -1,1 +1,10 @@
-[]
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.acessorios.celular.twa",
+    "sha256_cert_fingerprints": [
+      "B7:14:DE:A4:21:82:EC:E2:9E:58:1B:8D:C5:42:42:9D:BA:3A:45:62:FF:51:8D:BC:8A:AE:4F:4D:91:6D:71:13"
+    ]
+  }
+}]
