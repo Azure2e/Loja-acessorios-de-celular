@@ -1,14 +1,42 @@
 <!DOCTYPE html>
-<html lang="pt-BR"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Trocas</title>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trocas e devolução</title>
+<style>
+body{margin:0;font-family:system-ui;background:#F6F3EE;color:#141414}
+.hero{background:linear-gradient(160deg,#141414,#1b2a28);color:#fff;padding:20px 20px 40px}
+.wrap{max-width:52rem;margin:0 auto}
+a{color:#14B8A6;text-decoration:none}
+.mark{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:10px;background:#FF5A1F;color:#fff;font-weight:800;margin-right:8px}
+h1{font-size:2rem;letter-spacing:-.03em}
+.grid{display:grid;gap:12px;padding:0 20px 40px;margin-top:-24px}
+@media(min-width:700px){.grid{grid-template-columns:1fr 1fr}}
+.card{background:#fff;border-radius:20px;padding:20px;box-shadow:0 16px 36px rgba(0,0,0,.08)}
+.num{font-size:2.5rem;font-weight:800;color:#14B8A6}
+.btn{display:inline-block;margin:8px 8px 0 0;padding:10px 16px;border-radius:999px;background:#FF5A1F;color:#fff;font-weight:800}
+.btn2{background:#141414}
+</style>
 </head>
-<body style="font-family:system-ui;background:#F6F3EE;color:#141414;padding:20px;max-width:40rem;margin:0 auto">
-<p><a href="index.html" style="color:#FF5A1F">Voltar à loja</a></p>
-<h1>Trocas e devolução</h1>
-<p>Você pode desistir da compra em até <b>7 dias</b> após receber (CDC).</p>
-<p>O item precisa estar sem uso, com etiqueta e na embalagem.</p>
-<p>Película já aplicada e produto com uso não entram em troca por arrependimento.</p>
-<p>Defeito: entre pela página de garantia.</p>
-<p><a href="garantia.html">Garantia</a> · <a href="whatsapp.html">Falar no WhatsApp</a></p>
-</body></html>
+<body>
+<div class="hero">
+  <div class="wrap">
+    <p><span class="mark">AC</span><a href="index.html" style="color:#fff">Voltar à loja</a></p>
+    <h1>Troca sem burocracia.</h1>
+    <p>7 dias para desistir. Defeito entra pela garantia.</p>
+  </div>
+</div>
+<div class="grid wrap">
+  <div class="card"><div class="num">7</div><h2>Dias para desistir</h2><p>Você pode devolver em até 7 dias após receber, pelo CDC.</p></div>
+  <div class="card"><div class="num">OK</div><h2>Como tem que estar</h2><p>Sem uso, com etiqueta e na embalagem original.</p></div>
+  <div class="card" style="grid-column:1/-1">
+    <h2>Não entra por arrependimento</h2>
+    <p>Película já aplicada e produto com sinais de uso.</p>
+    <p>Defeito de fabricação: use a página de garantia.</p>
+    <a class="btn" href="whatsapp.html">Falar no WhatsApp</a>
+    <a class="btn btn2" href="garantia.html">Garantia</a>
+  </div>
+</div>
+</body>
+</html>
