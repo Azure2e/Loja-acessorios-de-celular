@@ -5,35 +5,65 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Assistência técnica</title>
 <style>
-body{margin:0;font-family:system-ui;background:#F6F3EE;color:#141414}
-.hero{background:linear-gradient(160deg,#141414,#2a1a12);color:#fff;padding:20px 20px 44px}
-.wrap{max-width:56rem;margin:0 auto}
-.mark{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:10px;background:#FF5A1F;color:#fff;font-weight:800;margin-right:8px}
-h1{font-size:2rem}
-.grid{display:grid;gap:14px;padding:0 20px 28px;margin-top:-28px}
-@media(min-width:800px){.grid{grid-template-columns:1fr 1fr 1fr}}
-.card{background:#fff;border-radius:20px;padding:20px;box-shadow:0 16px 36px rgba(0,0,0,.08)}
-.price{font-weight:800;font-size:1.2rem}
-.btn{margin-top:10px;padding:10px 16px;border-radius:999px;background:#FF5A1F;color:#fff;font-weight:800;border:0}
-form{display:grid;gap:8px}
-input,textarea,select{font:inherit;padding:10px;border-radius:12px;border:1px solid #ddd}
+:root{--a:#FF5A1F;--t:#14B8A6;--ink:#141414;--bg:#F3EEE6}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+.hero{background:radial-gradient(900px 280px at 90% -10%,#ff5a1f55,transparent),linear-gradient(165deg,#101014 0%,#1c1410 60%,#141414 100%);color:#fff;padding:1.2rem 1.2rem 3.2rem}
+.wrap{max-width:58rem;margin:0 auto}
+.top{display:flex;justify-content:space-between;align-items:center}
+.brand{display:flex;align-items:center;gap:.55rem;color:#fff;text-decoration:none;font-weight:800}
+.mark{width:2.1rem;height:2.1rem;border-radius:11px;background:var(--a);display:grid;place-items:center;font-size:.78rem}
+.back{color:#fff;opacity:.8;text-decoration:none;font-size:.9rem}
+h1{font-size:clamp(1.7rem,5vw,2.8rem);letter-spacing:-.04em;line-height:1.1;margin:1.1rem 0 .4rem}
+.lead{color:#c9c3bb;max-width:28rem}
+.mods{display:grid;gap:1rem;padding:0 1.2rem;margin-top:-2rem}
+@media(min-width:800px){.mods{grid-template-columns:repeat(3,1fr)}}
+.card{background:#fff;border-radius:1.4rem;padding:1.2rem 1.2rem 1.3rem;box-shadow:0 22px 44px rgba(20,20,20,.12);position:relative;overflow:hidden}
+.card:before{content:"";position:absolute;left:0;top:0;right:0;height:5px;background:linear-gradient(90deg,var(--a),var(--t))}
+.tag{font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--a)}
+.card h2{margin:.35rem 0 .35rem;font-size:1.2rem}
+.card p{margin:0;color:#5c564e;font-size:.95rem}
+.price{margin-top:.9rem;font-weight:800;font-size:1.25rem}
+.box{padding:1.2rem;max-width:58rem;margin:1.2rem auto 2.5rem}
+.form-card{background:#fff;border-radius:1.4rem;padding:1.25rem;box-shadow:0 16px 36px rgba(20,20,20,.08)}
+form{display:grid;gap:.65rem}
+input,select,textarea{font:inherit;padding:.75rem .85rem;border-radius:12px;border:1px solid #e5dfd6;background:#faf8f4}
+.btn{border:0;border-radius:999px;padding:.85rem 1.1rem;background:var(--a);color:#fff;font-weight:800;font-size:1rem}
 </style>
 </head>
 <body>
-<div class="hero">
+<header class="hero">
   <div class="wrap">
-    <p><span class="mark">AC</span><a href="index.html" style="color:#fff">Voltar à loja</a></p>
-    <h1>Assistência técnica</h1>
-    <p>Trocamos display, trocamos bateria e atualizamos o software do celular.</p>
+    <div class="top">
+      <a class="brand" href="index.html"><span class="mark">AC</span> Acessórios</a>
+      <a class="back" href="index.html">Voltar à loja</a>
+    </div>
+    <h1>Seu celular de volta<br>ao normal.</h1>
+    <p class="lead">Três serviços: display, bateria e software. Orçamento pelo WhatsApp.</p>
   </div>
-</div>
-<div class="grid wrap">
-  <div class="card"><h2>Troca de display</h2><p>Tela quebrada, toque falhando ou mancha.</p><p class="price">A partir de R$ 180</p></div>
-  <div class="card"><h2>Troca de bateria</h2><p>Descarrega rápido, desliga ou incha.</p><p class="price">A partir de R$ 120</p></div>
-  <div class="card"><h2>Atualização de software</h2><p>Sistema lento, erro de update ou restauração.</p><p class="price">A partir de R$ 80</p></div>
-</div>
-<div class="wrap" style="padding:0 20px 40px">
-  <div class="card">
+</header>
+<section class="mods wrap">
+  <article class="card">
+    <div class="tag">01 · Tela</div>
+    <h2>Troca de display</h2>
+    <p>Vidro quebrado, toque falhando ou mancha. Peça no modelo do aparelho.</p>
+    <div class="price">a partir de R$ 180</div>
+  </article>
+  <article class="card">
+    <div class="tag">02 · Energia</div>
+    <h2>Troca de bateria</h2>
+    <p>Vicia rápido, desliga sozinho ou está inchada. Teste de carga incluso.</p>
+    <div class="price">a partir de R$ 120</div>
+  </article>
+  <article class="card">
+    <div class="tag">03 · Sistema</div>
+    <h2>Atualização de software</h2>
+    <p>Travando, erro de update ou restauração. Backup quando for possível.</p>
+    <div class="price">a partir de R$ 80</div>
+  </article>
+</section>
+<div class="box">
+  <div class="form-card">
     <h2>Agendar serviço</h2>
     <form onsubmit="enviar(event)">
       <input name="nome" required placeholder="Seu nome">
@@ -44,7 +74,7 @@ input,textarea,select{font:inherit;padding:10px;border-radius:12px;border:1px so
         <option>Atualização de software</option>
       </select>
       <input name="modelo" placeholder="Modelo do celular">
-      <textarea name="obs" rows="3" placeholder="O que aconteceu?"></textarea>
+      <textarea name="obs" rows="3" placeholder="O que aconteceu com o aparelho?"></textarea>
       <button class="btn" type="submit">Enviar no WhatsApp</button>
     </form>
   </div>
