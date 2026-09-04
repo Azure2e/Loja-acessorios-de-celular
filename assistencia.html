@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assistência técnica</title>
+<style>
+body{margin:0;font-family:system-ui;background:#F6F3EE;color:#141414}
+.hero{background:linear-gradient(160deg,#141414,#2a1a12);color:#fff;padding:20px 20px 44px}
+.wrap{max-width:56rem;margin:0 auto}
+.mark{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:10px;background:#FF5A1F;color:#fff;font-weight:800;margin-right:8px}
+h1{font-size:2rem}
+.grid{display:grid;gap:14px;padding:0 20px 28px;margin-top:-28px}
+@media(min-width:800px){.grid{grid-template-columns:1fr 1fr 1fr}}
+.card{background:#fff;border-radius:20px;padding:20px;box-shadow:0 16px 36px rgba(0,0,0,.08)}
+.price{font-weight:800;font-size:1.2rem}
+.btn{margin-top:10px;padding:10px 16px;border-radius:999px;background:#FF5A1F;color:#fff;font-weight:800;border:0}
+form{display:grid;gap:8px}
+input,textarea,select{font:inherit;padding:10px;border-radius:12px;border:1px solid #ddd}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="wrap">
+    <p><span class="mark">AC</span><a href="index.html" style="color:#fff">Voltar à loja</a></p>
+    <h1>Assistência técnica</h1>
+    <p>Trocamos display, trocamos bateria e atualizamos o software do celular.</p>
+  </div>
+</div>
+<div class="grid wrap">
+  <div class="card"><h2>Troca de display</h2><p>Tela quebrada, toque falhando ou mancha.</p><p class="price">A partir de R$ 180</p></div>
+  <div class="card"><h2>Troca de bateria</h2><p>Descarrega rápido, desliga ou incha.</p><p class="price">A partir de R$ 120</p></div>
+  <div class="card"><h2>Atualização de software</h2><p>Sistema lento, erro de update ou restauração.</p><p class="price">A partir de R$ 80</p></div>
+</div>
+<div class="wrap" style="padding:0 20px 40px">
+  <div class="card">
+    <h2>Agendar serviço</h2>
+    <form onsubmit="enviar(event)">
+      <input name="nome" required placeholder="Seu nome">
+      <input name="fone" required placeholder="WhatsApp">
+      <select name="servico">
+        <option>Troca de display</option>
+        <option>Troca de bateria</option>
+        <option>Atualização de software</option>
+      </select>
+      <input name="modelo" placeholder="Modelo do celular">
+      <textarea name="obs" rows="3" placeholder="O que aconteceu?"></textarea>
+      <button class="btn" type="submit">Enviar no WhatsApp</button>
+    </form>
+  </div>
+</div>
+<script>
+function enviar(e){
+  e.preventDefault();
+  var f=e.target;
+  var t="Assistencia tecnica%0ANome: "+encodeURIComponent(f.nome.value)+"%0AWhatsApp: "+encodeURIComponent(f.fone.value)+"%0AServico: "+encodeURIComponent(f.servico.value)+"%0AModelo: "+encodeURIComponent(f.modelo.value)+"%0A"+encodeURIComponent(f.obs.value);
+  location.href="https://wa.me/5511999999999?text="+t;
+}
+</script>
+</body>
+</html>
