@@ -3,12 +3,12 @@ workbox.setConfig({ debug: false });
 workbox.core.skipWaiting();
 workbox.core.clientsClaim();
 workbox.precaching.precacheAndRoute([
-  { url: "./index.html", revision: "wb8" },
-  { url: "./offline.html", revision: "wb8" },
-  { url: "./app.react.min.js", revision: "wb8" },
-  { url: "./manifest.webmanifest", revision: "wb8" },
-  { url: "./icon-192.png", revision: "wb8" },
-  { url: "./icon-512.png", revision: "wb8" }
+  { url: "./index.html", revision: "wb10" },
+  { url: "./offline.html", revision: "wb10" },
+  { url: "./app.react.min.js", revision: "wb10" },
+  { url: "./manifest.webmanifest", revision: "wb10" },
+  { url: "./icon-192.png", revision: "wb10" },
+  { url: "./icon-512.png", revision: "wb10" }
 ]);
 workbox.routing.registerRoute(
   ({ request }) => request.destination === "image",
@@ -26,3 +26,4 @@ workbox.routing.registerRoute(
   ({ request }) => request.mode === "navigate",
   new workbox.strategies.NetworkFirst({ cacheName: "nexo-pages" })
 );
+
